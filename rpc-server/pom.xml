@@ -12,4 +12,11 @@
     <artifactId>rpc-server</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.gt</groupId>
+            <artifactId>rpc-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
