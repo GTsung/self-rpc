@@ -1,5 +1,6 @@
 package com.gt.rpc.client.discovery;
 
+import com.gt.rpc.client.connect.ConnectionManager;
 import com.gt.rpc.config.ZkConstant;
 import com.gt.rpc.protocol.RpcProtocol;
 import com.gt.rpc.zookeeper.CuratorClient;
@@ -83,11 +84,11 @@ public class ServiceDiscovery {
     }
 
     private void updateConnectedServer(List<RpcProtocol> rpcProtocols) {
-
+        ConnectionManager.getInstance().updateConnectedServer(rpcProtocols);
     }
 
     private void updateConnectedServer(RpcProtocol rpcProtocol, PathChildrenCacheEvent.Type type) {
-
+        ConnectionManager.getInstance().updateConnectedServer(rpcProtocol, type);
     }
 
     public void stop() {
