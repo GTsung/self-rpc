@@ -3,6 +3,7 @@ package com.gt.rpc.client.route;
 import com.gt.rpc.client.handler.RpcClientHandler;
 import com.gt.rpc.protocol.RpcProtocol;
 import com.gt.rpc.util.ServiceUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.map.HashedMap;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public abstract class RpcLoadBalance {
 
-    protected Map<String, List<RpcProtocol>> getServiceMap(Map<RpcProtocol, RpcClientHandler> connectedServerNodes) {
+    private Map<String, List<RpcProtocol>> getServiceMap(Map<RpcProtocol, RpcClientHandler> connectedServerNodes) {
         Map<String, List<RpcProtocol>> serviceMap = new HashedMap<>();
         if (connectedServerNodes != null && connectedServerNodes.size() > 0) {
             connectedServerNodes.keySet().forEach(key -> {
@@ -40,7 +41,17 @@ public abstract class RpcLoadBalance {
      * @return
      * @throws Exception
      */
-    public abstract RpcProtocol route(String serviceKey, Map<RpcProtocol, RpcClientHandler> connectedServerNodes)
-            throws Exception;
+    public RpcProtocol route(String serviceKey, Map<RpcProtocol, RpcClientHandler> connectedServerNodes)
+            throws Exception {
+        Map<String, List<RpcProtocol>> serviceMap = getServiceMap(connectedServerNodes);
+        List<RpcProtocol> addressList = serviceMap.get(serviceKey);
+        if (!CollectionUtils.isEmpty(addressList)) {
+            return doRoute(serviceKey, addressList);
+        } else {
+            throw new Exception("Can not find connection for service: " + serviceKey);
+        }
+    }
+
+    protected abstract RpcProtocol doRoute(String serviceKey, List<RpcProtocol> protocols);
 
 }

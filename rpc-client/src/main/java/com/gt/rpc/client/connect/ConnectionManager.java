@@ -3,7 +3,7 @@ package com.gt.rpc.client.connect;
 import com.gt.rpc.client.handler.RpcClientHandler;
 import com.gt.rpc.client.handler.RpcClientInitializer;
 import com.gt.rpc.client.route.RpcLoadBalance;
-import com.gt.rpc.client.route.RpcLoadBalanceRoundRobin;
+import com.gt.rpc.client.route.impl.RpcLoadBalanceRoundRobin;
 import com.gt.rpc.protocol.RpcProtocol;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
